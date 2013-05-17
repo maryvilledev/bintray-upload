@@ -104,7 +104,7 @@ function create_package() {
 
 function upload_content() {
   echo "[DEBUG] Uploading ${JAR_FILE}..."
-  uploaded=` [ $(${CURL} --write-out %{http_code} --silent --output /dev/null -T ${JAR} -H X-Bintray-Package:${PCK_NAME} -H X-Bintray-Version:${PCK_VERSION}-${PCK_RELEASE} ${API}/content/${BINTRAY_ORG}/${REPO}/${JAR_FILE}) -eq ${CREATED} ] `
+  uploaded=` [ $(${CURL} --write-out %{http_code} --silent --output /dev/null -T ${JAR} -H X-Bintray-Package:${PCK_NAME} -H X-Bintray-Version:${PCK_VERSION} ${API}/content/${BINTRAY_ORG}/${REPO}/${JAR_FILE}) -eq ${CREATED} ] `
   echo "[DEBUG] JAR ${JAR_FILE} uploaded? y:1/N:0 ${package_exists}"
   return ${uploaded}
 }
