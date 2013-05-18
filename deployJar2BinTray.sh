@@ -26,7 +26,6 @@
 # content manager https://bintray.com/ It's a lazy script so you won't found any
 # CLI controls...
 
-
 #Constants
 API=https://api.bintray.com
 NOT_FOUND=404
@@ -76,7 +75,8 @@ function main() {
 }
 
 function init_curl() {
-  CURL="curl -u${SUBJECT}:${API_KEY} -H Content-Type:application/json -H Accept:application/json"
+  CURL="curl -u${SUBJECT}:${API_KEY} -H Accept:application/json"
+  CURLJSON="$CURL -H Content-Type:application/json"
 }
 
 function check_package_exists() {
@@ -99,20 +99,20 @@ function create_package() {
     }"
   fi
   
-  ${CURL} -X POST  -d  "${data}" ${API}/packages/${BINTRAY_ORG}/${REPO}/
+  ${CURLJSON} -X POST  -d  "${data}" ${API}/packages/${BINTRAY_ORG}/${REPO}/
 }
 
 function upload_content() {
   echo "[DEBUG] Uploading ${JAR_FILE}..."
   uploaded=` [ $(${CURL} --write-out %{http_code} --silent --output /dev/null -T ${JAR} -H X-Bintray-Package:${PCK_NAME} -H X-Bintray-Version:${PCK_VERSION} ${API}/content/${BINTRAY_ORG}/${REPO}/${JAR_FILE}) -eq ${CREATED} ] `
-  echo "[DEBUG] JAR ${JAR_FILE} uploaded? y:1/N:0 ${package_exists}"
+  echo "[DEBUG] JAR ${JAR_FILE} uploaded? y:1/N:0 ${uploaded}"
   return ${uploaded}
 }
 function deploy_rpm() {
   
   if ( upload_content); then
     echo "[DEBUG] Publishing ${JAR_FILE}..."
-    ${CURL} -X POST ${API}/content/${BINTRAY_ORG}/${REPO}/${PCK_NAME}/${PCK_VERSION}/publish -d "{ \"discard\": \"false\" }"
+    ${CURLJSON} -X POST ${API}/content/${BINTRAY_ORG}/${REPO}/${PCK_NAME}/${PCK_VERSION}/publish -d "{ \"discard\": \"false\" }"
   else
     echo "[SEVERE] First you should upload your rpm ${JAR_FILE}"
   fi    
