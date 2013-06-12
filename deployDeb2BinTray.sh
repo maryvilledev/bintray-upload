@@ -107,8 +107,9 @@ function create_package() {
 
 function upload_content() {
   echo "[DEBUG] Uploading ${DEB_FILE}..."
-  uploaded=` [ $(${CURL} --write-out %{http_code} --silent --output /dev/null -T ${DEB} -H X-Bintray-Package:${PCK_NAME} -H X-Bintray-Version:${PCK_VERSION}-${PCK_RELEASE} ${API}/content/${ORG}/${REPO}/${DEB_FILE}) -eq ${CREATED} ] `
-  echo "[DEBUG] DEB ${DEB_FILE} uploaded? y:1/N:0 ${package_exists}"
+  [ $(${CURL} --write-out %{http_code} --silent --output /dev/null -T ${DEB} -H X-Bintray-Package:${PCK_NAME} -H X-Bintray-Version:${PCK_VERSION}-${PCK_RELEASE} ${API}/content/${ORG}/${REPO}/${DEB_FILE}) -eq ${CREATED} ]
+  uploaded=$?
+  echo "[DEBUG] DEB ${DEB_FILE} uploaded? y:1/N:0 ${uploaded}"
   return ${uploaded}
 }
 function deploy_deb() {

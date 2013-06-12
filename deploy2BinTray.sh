@@ -105,8 +105,9 @@ function create_package() {
 
 function upload_content() {
   echo "[DEBUG] Uploading ${RPM_FILE}..."
-  uploaded=` [ $(${CURL} --write-out %{http_code} --silent --output /dev/null -T ${RPM} -H X-Bintray-Package:${PCK_NAME} -H X-Bintray-Version:${PCK_VERSION}-${PCK_RELEASE} ${API}/content/${BINTRAY_ORG}/${REPO}/${RPM_FILE}) -eq ${CREATED} ] `
-  echo "[DEBUG] RPM ${RPM_FILE} uploaded? y:1/N:0 ${package_exists}"
+  [ $(${CURL} --write-out %{http_code} --silent --output /dev/null -T ${RPM} -H X-Bintray-Package:${PCK_NAME} -H X-Bintray-Version:${PCK_VERSION}-${PCK_RELEASE} ${API}/content/${BINTRAY_ORG}/${REPO}/${RPM_FILE}) -eq ${CREATED} ]
+  uploaded=$?
+  echo "[DEBUG] RPM ${RPM_FILE} uploaded? y:1/N:0 ${uploaded}"
   return ${uploaded}
 }
 function deploy_rpm() {
