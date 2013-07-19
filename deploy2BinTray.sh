@@ -96,7 +96,7 @@ function create_package() {
     data="{
     \"name\": \"${PCK_NAME}\",
     \"desc\": \"\",
-    \"desc_url\": \"\",
+    \"licenses\": [\"Apache-2.0\"]
     }"
   fi
   

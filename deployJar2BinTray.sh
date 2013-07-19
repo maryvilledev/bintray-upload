@@ -95,7 +95,7 @@ function create_package() {
     data="{
     \"name\": \"${PCK_NAME}\",
     \"desc\": \"\",
-    \"desc_url\": \"\",
+    \"licenses\": [\"Apache-2.0\"]
     }"
   fi
   
@@ -116,6 +116,7 @@ function deploy_rpm() {
     ${CURLJSON} -X POST ${API}/content/${BINTRAY_ORG}/${REPO}/${PCK_NAME}/${PCK_VERSION}/publish -d "{ \"discard\": \"false\" }"
   else
     echo "[SEVERE] First you should upload your rpm ${JAR_FILE}"
+    exit 2
   fi    
 }
 
