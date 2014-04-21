@@ -70,7 +70,7 @@ function main() {
   echo "[DEBUG] PCK_RELEASE: ${PCK_RELEASE}"
   
   init_curl
-  if ( check_package_exists ); then
+  if ( 0 != check_package_exists ); then
     echo "[DEBUG] The package ${PCK_NAME} does not exit. It will be created"
     create_package        
   fi
@@ -119,6 +119,7 @@ function deploy_deb() {
     ${CURL} -X POST ${API}/content/${ORG}/${REPO}/${PCK_NAME}/${PCK_VERSION}-${PCK_RELEASE}/publish -d "{ \"discard\": \"false\" }"
   else
     echo "[SEVERE] First you should upload your deb ${DEB_FILE}"
+    exit 2
   fi    
 }
 
