@@ -117,6 +117,7 @@ function deploy_rpm() {
     ${CURL} -X POST ${API}/content/${BINTRAY_ORG}/${REPO}/${PCK_NAME}/${PCK_VERSION}-${PCK_RELEASE}/publish -d "{ \"discard\": \"false\" }"
   else
     echo "[SEVERE] First you should upload your rpm ${RPM_FILE}"
+    exit 2
   fi    
 }
 
