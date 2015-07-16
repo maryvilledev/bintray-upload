@@ -98,6 +98,7 @@ function create_package() {
     data="{
     \"name\": \"${PCK_NAME}\",
     \"desc\": \"\",
+    \"vcs_url\": \"${VCS_URL}\",
     \"licenses\": [\"Apache-2.0\"]
     }"
   fi
