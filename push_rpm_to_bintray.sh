@@ -22,7 +22,7 @@ BASE_DESC=$5
 
 CURL_CMD="curl --write-out %{http_code} --silent --output /dev/null -u$BINTRAY_USER:$BINTRAY_APIKEY"
 
-BINTRAY_ACCOUNT=$BINTRAY_USER
+BINTRAY_ACCOUNT=maryvilledev
 
 RPM_NAME=`rpm --queryformat "%{NAME}" -qp $RPM_FILE`
 RPM_VERSION=`rpm --queryformat "%{VERSION}" -qp $RPM_FILE`
